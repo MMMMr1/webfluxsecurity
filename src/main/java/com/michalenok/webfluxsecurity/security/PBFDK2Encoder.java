@@ -31,7 +31,7 @@ public class PBFDK2Encoder implements PasswordEncoder {
             return Base64.getEncoder()
                     .encodeToString(result);
         }catch (NoSuchAlgorithmException | InvalidKeySpecException e){
-            throw  new RuntimeException(e);
+            throw new RuntimeException(e);
         }
     }
 
