@@ -1,6 +1,5 @@
 package com.michalenok.webfluxsecurity.security;
 
-import com.michalenok.webfluxsecurity.exception.AuthException;
 import com.michalenok.webfluxsecurity.exception.UnauthorizedException;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
