@@ -3,6 +3,7 @@ package com.michalenok.webfluxsecurity.security;
 import com.michalenok.webfluxsecurity.entity.UserEntity;
 import com.michalenok.webfluxsecurity.exception.AuthException;
 import com.michalenok.webfluxsecurity.repository.UserRepository;
+import com.michalenok.webfluxsecurity.service.api.UserService;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.RequiredArgsConstructor;
@@ -16,13 +17,13 @@ import java.util.*;
 @Component
 @RequiredArgsConstructor
 public class SecurityService {
-    private final UserRepository userRepository;
+    private final UserService userService;
     private final PasswordEncoder passwordEncoder;
     @Value("${jwt.secret}")
     private String secret;
     @Value("${jwt.expiration}")
     private Integer expirationInSeconds;
-    @Value("${jwt. issuer}")
+    @Value("${jwt.issuer}")
     private String issuer;
 
     private TokenDetails generateToken(UserEntity user){
@@ -57,7 +58,7 @@ public class SecurityService {
     }
 
     public Mono<TokenDetails> authenticate(String username, String password){
-        return userRepository.findByUsername(username)
+        return userService.getUserByUsername(username)
                 .flatMap(user -> {
                     if (!user.isEnabled()){
                         return Mono.error(new AuthException("Account disabled", "USER_ACCOUNT_DISABLED"));
